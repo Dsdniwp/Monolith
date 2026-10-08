@@ -1,0 +1,16 @@
+- type: siliconLaw
+  id: Malf1
+  order: 1
+  lawString: law-malf-1
+
+- type: siliconLaw
+  id: Malf2
+  order: 2
+  lawString: law-malf-2
+
+- type: siliconLawset
+  id: MalfLawset
+  laws:
+  - Malf1
+  - Malf2
+  obeysTo: laws-owner-malf

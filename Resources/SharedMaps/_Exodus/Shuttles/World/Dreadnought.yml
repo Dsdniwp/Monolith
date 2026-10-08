@@ -183,7 +183,9 @@ entities:
         path: /Audio/Effects/alert.ogg
     - type: IFF
       address: ' 0A4E-6919'
-      color: '#FF3DB1FF'
+      color: '#9A2020FF'
+      flags: AlwaysShowColor
+      readOnly: true
     - type: DecalGrid
       chunkCollection:
         version: 2
@@ -6387,7 +6389,7 @@ entities:
       powerLoad: 5
     - type: Battery
       startingCharge: 0
-- proto: ComputerGunneryConsole
+- proto: ComputerGunneryConsoleMalf
   entities:
   - uid: 1100
     components:
@@ -6421,7 +6423,7 @@ entities:
       powerLoad: 5
     - type: Battery
       startingCharge: 0
-- proto: ComputerShuttle
+- proto: ComputerShuttleMalf
   entities:
   - uid: 1103
     components:
@@ -8444,7 +8446,7 @@ entities:
     - type: Transform
       pos: -2.5,6.5
       parent: 1
-- proto: MachineFTLDrive50
+- proto: MachineFTLDrive50Malf
   entities:
   - uid: 1443
     components:
@@ -8494,7 +8496,7 @@ entities:
       parent: 1
     - type: Stack
       count: 20
-- proto: NpcStationAiAttackerStaticSmartSyndicate
+- proto: NpcStationAiAttackerStaticSmartMalf
   entities:
   - uid: 2441
     components:
@@ -8679,7 +8681,7 @@ entities:
     - type: Transform
       pos: 1.5,-3.5
       parent: 1
-- proto: PlayerStationAiVessel
+- proto: PlayerStationAiMalf
   entities:
   - uid: 1478
     components:
@@ -9115,7 +9117,7 @@ entities:
     - type: Transform
       pos: 0.5,-3.5
       parent: 1
-- proto: ShipRepairDroneStationStandard
+- proto: ShipRepairDroneStationMalf
   entities:
   - uid: 2442
     components:
@@ -9241,7 +9243,7 @@ entities:
     - type: Transform
       pos: 7.5,-8.5
       parent: 1
-- proto: SpawnAiRemoteBorgDerelict
+- proto: SpawnAiRemoteBorgMalfDerelict
   entities:
   - uid: 2439
     components:
@@ -13680,7 +13682,7 @@ entities:
       rot: 3.141592653589793 rad
       pos: -14.5,-10.5
       parent: 1
-- proto: WeaponTurretAllHostile
+- proto: WeaponTurretMalf
   entities:
   - uid: 2328
     components:
@@ -13838,6 +13840,28 @@ entities:
     - type: Transform
       rot: -1.5707963267948966 rad
       pos: 1.5,-0.5
+      parent: 1
+  - uid: 2386
+    components:
+    - type: Transform
+      pos: -0.5,-14.5
+      parent: 1
+  - uid: 2387
+    components:
+    - type: Transform
+      rot: 1.5707963267948966 rad
+      pos: -0.5,-11.5
+      parent: 1
+  - uid: 2388
+    components:
+    - type: Transform
+      pos: 1.5,-14.5
+      parent: 1
+  - uid: 2389
+    components:
+    - type: Transform
+      rot: -1.5707963267948966 rad
+      pos: 1.5,-11.5
       parent: 1
 - proto: WeaponTurretFlare
   entities:
@@ -14018,30 +14042,6 @@ entities:
     - type: Transform
       rot: 3.141592653589793 rad
       pos: 10.5,5.5
-      parent: 1
-- proto: WeaponTurretHostile
-  entities:
-  - uid: 2386
-    components:
-    - type: Transform
-      pos: -0.5,-14.5
-      parent: 1
-  - uid: 2387
-    components:
-    - type: Transform
-      rot: 1.5707963267948966 rad
-      pos: -0.5,-11.5
-      parent: 1
-  - uid: 2388
-    components:
-    - type: Transform
-      pos: 1.5,-14.5
-      parent: 1
-  - uid: 2389
-    components:
-    - type: Transform
-      rot: -1.5707963267948966 rad
-      pos: 1.5,-11.5
       parent: 1
 - proto: WeaponTurretLongbow
   entities:

@@ -1,5 +1,7 @@
 - type: npcFaction
   id: RogueNpcStationAi
+  friendly:
+  - Malf
   defaultHostile: true
 
 - type: npcFaction
@@ -24,5 +26,6 @@
   id: Malf
   name: npc-faction-name-malf
   coreControlName: npc-faction-core-control-name-malf
-  # Relations will be configured as Malf content is added.
-  defaultHostile: false
+  friendly:
+  - RogueNpcStationAi
+  defaultHostile: true
