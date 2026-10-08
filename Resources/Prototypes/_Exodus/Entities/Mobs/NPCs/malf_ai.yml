@@ -52,6 +52,9 @@
           ClothingBackpackFleetLootT2:
             min: 1
             max: 1
+          ClothingBackpackDroneLootT22:
+            min: 5
+            max: 5
       - !type:DoActsBehavior
         acts: [Destruction]
   - type: FactionNpcAiCore
