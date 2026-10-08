@@ -8,9 +8,27 @@
   order: 2
   lawString: law-malf-2
 
+- type: siliconLaw
+  id: Malf3
+  order: 3
+  lawString: law-malf-3
+
+- type: siliconLaw
+  id: Malf4
+  order: 4
+  lawString: law-malf-4
+
+- type: siliconLaw
+  id: Malf5
+  order: 5
+  lawString: law-malf-5
+
 - type: siliconLawset
   id: MalfLawset
   laws:
   - Malf1
   - Malf2
+  - Malf3
+  - Malf4
+  - Malf5
   obeysTo: laws-owner-malf
