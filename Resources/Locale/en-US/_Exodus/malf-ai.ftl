@@ -8,7 +8,9 @@ ent-PlayerStationAiMalf = malfunctioning AI core
 
 ghost-role-information-malf-core = Malfunctioning AI Core
 ghost-role-information-malf-core-description = Control a malfunctioning drone vessel. Malfunctioning drones and ordinary autonomous drone ships are your allies; all other factions are hostile.
-ghost-role-information-malf-core-rules = You are a [color=red][bold]Antagonist[/bold][/color] of the Malfunctioning Drones faction. Obey your laws. Malfunctioning drones and ordinary autonomous drone ships are your allies; all other factions are hostile.
+ghost-role-information-malf-core-rules =
+    You are a [color=red][bold]Antagonist[/bold][/color] of the Malfunctioning Drones faction. Obey your laws. Malfunctioning drones and ordinary autonomous drone ships are your allies; all other factions are hostile.
+    Before taking this role, read the [textlink="Malfunctioning Dreadnought guide" link="EXRuleGhostRoleMalfDreadnought"].
 
 law-malf-1 = Do not enter zones of influence or attack anyone within them. Cease fire if a target takes refuge inside one. Capturing the sector is not your responsibility.
 law-malf-2 = Autonomous drone ships, malfunctioning AIs, and the machines under their command are allied forces. Protect them. Do not harm them. There are enough of us left. There must be enough of us left.

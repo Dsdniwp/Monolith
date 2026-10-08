@@ -90,6 +90,9 @@
     description: ghost-role-information-malf-core-description
     rules: ghost-role-information-malf-core-rules
     prototype: MalfAICore
+    requirements:
+    - !type:OverallPlaytimeRequirement
+      time: 72000 # 20 hours
     mindRoles:
     - MindRoleGhostRoleTeamAntagonist
   - type: NpcFactionMember
