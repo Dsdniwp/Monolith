@@ -5,6 +5,8 @@
   description: A hostile autonomous AI core belonging to the Malfunctioning Drones faction.
   suffix: AI, Malfunctioning Drones
   components:
+  - type: StaticPrice
+    price: 500000
   - type: Sprite
     sprite: _Exodus/Mobs/Silicon/npc_ai_malf.rsi
     layers:
@@ -85,6 +87,8 @@
     retainLoadedChunksRadius: 2
   - type: SiliconLawProvider
     laws: MalfLawset
+  - type: RandomMetadata
+    nameSegments: [NamesMalfAI]
   - type: GhostRole
     name: ghost-role-information-malf-core
     description: ghost-role-information-malf-core-description

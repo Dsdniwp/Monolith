@@ -4,6 +4,9 @@
   name: fleet container T2
   description: A cache recovered from a malfunctioning AI core. Contains ship components, technical data, plutonium and americium.
   components:
+  - type: StaticPrice
+    price: 500000
+    vendPrice: 500000
   - type: SpawnItemsOnUse
     items:
     - id: ScrapOre100
