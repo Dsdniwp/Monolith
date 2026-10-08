@@ -87,7 +87,18 @@ entities:
   - uid: 1
     components:
     - type: MetaData
-      name: АСЗ Азимут
+      name: ДРЕДНОУТ
+    - type: RandomMetadata
+      nameSeparator: ""
+      nameSegments:
+      - malf-dreadnought-name
+      - DroneAltHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
+      - DroneHex
     - type: Transform
       pos: -0.56330746,-0.52260464
       parent: invalid
@@ -95,10 +106,10 @@ entities:
     - type: ShipRepairRestrict
       toolWhitelist:
         tags:
-        - ADSRepairTool
+        - MalfRepairTool
     - type: NpcFactionMember
       factions:
-      - AsakimDefenceForces
+      - Malf
     - type: MapGrid
       chunks:
         0,0:
