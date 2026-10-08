@@ -186,6 +186,9 @@ entities:
       color: '#9A2020FF'
       flags: AlwaysShowColor
       readOnly: true
+    - type: IffAffiliation
+      mode: FixedLabel
+      label: exodus-iff-drone-malfunction
     - type: DecalGrid
       chunkCollection:
         version: 2
