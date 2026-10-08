@@ -368,7 +368,9 @@ namespace Content.Server.Lathe
                 {
                     for (var i = 0; i < comp.CurrentRecipe.ResultCount; i++) // mono
                     {
-                        var result = Spawn(resultProto, Transform(uid).Coordinates);
+                        // Exodus: large machines dispense outside their footprint.
+                        var xform = Transform(uid);
+                        var result = Spawn(resultProto, xform.Coordinates.Offset(xform.LocalRotation.RotateVec(comp.OutputOffset)));
 
                         // Frontier: adjust price before merge (stack prices changed once)
                         if (result.Valid)
@@ -596,6 +598,7 @@ namespace Content.Server.Lathe
 
             component.FinalTimeMultiplier = component.TimeMultiplier * MathF.Pow(component.PartRatingPrintTimeMultiplier, printTimeRating - 1);
             component.FinalMaterialUseMultiplier = component.MaterialUseMultiplier * MathF.Pow(component.PartRatingMaterialUseMultiplier, materialUseRating - 1);
+            ApplyPartMultiplierOverrides((uid, component), args); // Exodus: configurable part upgrade curves.
             Dirty(uid, component);
         }
 

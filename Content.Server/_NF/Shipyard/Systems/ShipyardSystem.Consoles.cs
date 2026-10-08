@@ -1,3 +1,4 @@
+using Content.Shared._Exodus.Company; // Exodus concern migration
 using Content.Server.Access.Systems;
 using Content.Server.Popups;
 using Content.Server.Radio.EntitySystems;
@@ -264,13 +265,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (TryComp<IdCardComponent>(targetId, out var idCardCompany) &&
             !string.IsNullOrEmpty(idCardCompany.CompanyName))
         {
-            companyName = idCardCompany.CompanyName;
+            companyName = CompanyConsolidation.Normalize(idCardCompany.CompanyName, _prototypeManager); // Exodus concern migration
         }
         // If no ID card company, try to get from voucher
         else if (TryComp<ShipyardVoucherComponent>(targetId, out var voucherCompany) &&
                  !string.IsNullOrEmpty(voucherCompany.CompanyName))
         {
-            companyName = voucherCompany.CompanyName;
+            companyName = CompanyConsolidation.Normalize(voucherCompany.CompanyName, _prototypeManager); // Exodus concern migration
         }
 
         // Apply company to ship if we found one
@@ -500,6 +501,15 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
 
         bool voucherUsed = deed.PurchasedWithVoucher;
 
+        // Exodus-begin: wait before transferring records or applying any paid sale side effects.
+        if (!voucherUsed && !_dynamicMarket.Ready)
+        {
+            ConsolePopup(player, Loc.GetString("market-sale-unavailable"));
+            PlayDenySound(player, uid, component);
+            return;
+        }
+        // Exodus-end
+
         if (!TryComp<BankAccountComponent>(player, out var bank))
         {
             ConsolePopup(player, Loc.GetString("shipyard-console-no-bank"));
@@ -538,7 +548,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
             return;
         }
 
-        var saleResult = TrySellShuttle(stationUid, shuttleUid, uid, out var bill);
+        var saleResult = TrySellShuttle(stationUid, shuttleUid, uid, out var bill, paidSale: !voucherUsed); // Exodus: unpaid voucher returns cannot stock the market.
         if (saleResult.Error != ShipyardSaleError.Success)
         {
             switch (saleResult.Error)
@@ -552,6 +562,11 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 case ShipyardSaleError.InvalidShip:
                     ConsolePopup(player, Loc.GetString("shipyard-console-sale-invalid-ship"));
                     break;
+                // Exodus-begin: preserve the caller's localized explanation for a rejected sale.
+                case ShipyardSaleError.MessageOverwritten:
+                    ConsolePopup(player, saleResult.OverwrittenMessage ?? Loc.GetString("market-sale-unavailable"));
+                    break;
+                // Exodus-end
                 default:
                     ConsolePopup(player, Loc.GetString("shipyard-console-sale-unknown-reason", ("reason", saleResult.Error.ToString())));
                     break;
@@ -910,13 +925,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (TryComp<IdCardComponent>(targetId, out var idCardCompany)
             && idCardCompany.CompanyName != "None")
         {
-            buyerCompany = idCardCompany.CompanyName;
+            buyerCompany = CompanyConsolidation.Normalize(idCardCompany.CompanyName, _prototypeManager); // Exodus concern migration
         }
         else if (TryComp<ShipyardVoucherComponent>(targetId, out var voucherCompany)
                  && !string.IsNullOrEmpty(voucherCompany.CompanyName)
                  && voucherCompany.CompanyName != "None")
         {
-            buyerCompany = voucherCompany.CompanyName;
+            buyerCompany = CompanyConsolidation.Normalize(voucherCompany.CompanyName, _prototypeManager); // Exodus concern migration
         }
         // Exodus-end
 
@@ -931,7 +946,7 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
                 var companyAllowed = false;
                 foreach (var required in vessel.RequiredCompanies)
                 {
-                    if (required != company)
+                    if (CompanyConsolidation.Normalize(required.Id, _prototypeManager) != company.Id) // Exodus concern migration
                         continue;
 
                     companyAllowed = true;
@@ -990,13 +1005,13 @@ public sealed partial class ShipyardSystem : SharedShipyardSystem
         if (TryComp<IdCardComponent>(targetId, out var idCard)
             && idCard.CompanyName != "None")
         {
-            buyerCompanyId = idCard.CompanyName;
+            buyerCompanyId = CompanyConsolidation.Normalize(idCard.CompanyName, _prototypeManager); // Exodus concern migration
         }
         else if (TryComp<ShipyardVoucherComponent>(targetId, out var voucher)
                  && !string.IsNullOrEmpty(voucher.CompanyName)
                  && voucher.CompanyName != "None")
         {
-            buyerCompanyId = voucher.CompanyName;
+            buyerCompanyId = CompanyConsolidation.Normalize(voucher.CompanyName, _prototypeManager); // Exodus concern migration
         }
         // Exodus-end
 

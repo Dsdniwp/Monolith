@@ -1,12 +1,16 @@
 using Content.Shared._Mono.ShipRepair;
 using Content.Shared.Actions;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Mind;
 using Content.Shared.Ninja.Systems;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.UserInterface;
+using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.Timing;
 
@@ -21,6 +25,7 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 {
     [Dependency] private EntityWhitelistSystem _whitelist = default!;
     [Dependency] private SharedMindSystem _mind = default!;
+    [Dependency] private NpcFactionSystem _factions = default!;
     [Dependency] private SharedPopupSystem _popup = default!;
     [Dependency] private SharedUserInterfaceSystem _ui = default!;
     [Dependency] private IGameTiming _timing = default!;
@@ -39,15 +44,23 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
         // Run after action-granting systems so their actions are already in the set and can be cleared.
         SubscribeLocalEvent<BiocodeComponent, GetItemActionsEvent>(OnGetItemActions, after: [typeof(DashAbilitySystem)]);
         SubscribeLocalEvent<BiocodeComponent, BeingEquippedAttemptEvent>(OnBeingEquippedAttempt);
+        SubscribeLocalEvent<BiocodeComponent, AttemptShootEvent>(OnAttemptShoot);
+        SubscribeLocalEvent<BiocodeComponent, AttemptMeleeEvent>(OnAttemptMelee);
     }
 
     /// <summary>
-    /// A user is authorized if there are no conditions, or they pass the user whitelist,
-    /// or the mind attached to them passes the mind whitelist.
+    /// A user is authorized if they bypass interaction checks, there are no conditions,
+    /// they pass a whitelist, or they belong to an accepted faction.
     /// </summary>
     public bool IsAllowed(Entity<BiocodeComponent> ent, EntityUid user)
     {
-        if (ent.Comp.Whitelist == null && ent.Comp.MindWhitelist == null)
+        if (HasComp<BypassInteractionChecksComponent>(user))
+            return true;
+
+        if (ent.Comp.Whitelist == null && ent.Comp.MindWhitelist == null && ent.Comp.Factions == null)
+            return true;
+
+        if (ent.Comp.Factions != null && _factions.IsMemberOfAny((user, null), ent.Comp.Factions))
             return true;
 
         if (ent.Comp.Whitelist != null && _whitelist.IsValid(ent.Comp.Whitelist, user))
@@ -155,5 +168,21 @@ public abstract partial class SharedBiocodeSystem : EntitySystem
 
         args.Cancel();
         ShowReject(ent, args.EquipTarget);
+    }
+
+    private void OnAttemptShoot(Entity<BiocodeComponent> ent, ref AttemptShootEvent args)
+    {
+        if (!ent.Comp.BlockInteraction || args.Cancelled || TryAccess(ent, args.User))
+            return;
+
+        args.Cancelled = true;
+    }
+
+    private void OnAttemptMelee(Entity<BiocodeComponent> ent, ref AttemptMeleeEvent args)
+    {
+        if (!ent.Comp.BlockInteraction || args.Cancelled || TryAccess(ent, args.User))
+            return;
+
+        args.Cancelled = true;
     }
 }

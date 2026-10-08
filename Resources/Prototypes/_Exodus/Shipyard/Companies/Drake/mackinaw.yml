@@ -1,0 +1,44 @@
+- type: vessel
+  id: DrakeMackinaw
+  parent: BaseVessel
+  name: company-vessel-drake-mackinaw-name
+  description: company-vessel-drake-mackinaw-description
+  price: 4682872 # Exodus: expected ship and contents value; no additional markup.
+  minPriceMarkup: 0.999958992 # Exodus: expected-price allowance for randomized contents.
+  category: Large
+  group: Shipyard
+  requiredCompanies:
+  - DrakeBlackArmsUSA
+  shuttlePath: /SharedMaps/_Exodus/Shuttles/Companies/drake/mackinaw.yml
+  addComponents:
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  guidebookPage: Null
+  class:
+  - Mercenary
+  - Salvage
+  - Cargo
+  engine:
+  - AME
+
+- type: gameMap
+  id: DrakeMackinaw
+  mapName: 'Дрэйк Макинав'
+  mapPath: /SharedMaps/_Exodus/Shuttles/Companies/drake/mackinaw.yml
+  isGrid: true
+  minPlayers: 0
+  stations:
+    DrakeMackinaw:
+      stationProto: StandardFrontierVessel
+      components:
+      - type: StationNameSetup
+        mapNameTemplate: 'Макинав{1}'
+        nameGenerator:
+          !type:NanotrasenNameGenerator
+          prefixCreator: '14'
+      - type: StationJobs
+        availableJobs:
+          Contractor: [ 0, 0 ]
+          Pilot: [ 0, 0 ]
+          Mercenary: [ 0, 0 ]

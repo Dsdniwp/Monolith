@@ -275,10 +275,15 @@
     - SMSurgery # Shitmed Change
     # Exodus-begin company-fleet
     - CompanyBlackhawkDynamic
+    - CompanyDrakeMiningDynamic # Exodus: Drake industrial equipment
     - CompanyHorizonDynamic
+    - CompanyHmeMedicalDynamic
+    - CompanyHiveGeneticsDynamic
     - CompanyBratvaDynamic
     - CompanyUllmanDynamic
     - CompanyCdmDynamic
+    - CompanyConcernKeysDynamic # Exodus: concern encryption keys
+    - CompanyAugokDynamic # Exodus: Aegis-Arsenal hardpoints
     # Exodus-end
     # WD EDIT START
     - VisionGoggles
@@ -365,6 +370,8 @@
     - ReactorCircuitboards # FH edit
     # Exodus-begin company-fleet
     - CompanyHorizonBoardsDynamic
+    - CompanyHiveBoardsDynamic
+    - CompanyDrakeBoardsDynamic # Exodus: Drake mining boards
     - CompanyNosskeDynamic
     - CompanyBratvaBoardsDynamic
     - CompanyCdmBoardsDynamic

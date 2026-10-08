@@ -2,7 +2,7 @@
   id: BaseHardpoint
   name: Hardpoint
   abstract: true
-  description: An optional universal weapon mount. Increases the rate of fire of any anchored gun by 25%, without accelerating reloading or energy recharge. # Exodus
+  description: A fixed mounting point for ship weapons. Compatible weapons retain their normal firing rate; unsuitable mounts reduce it. # Exodus
   placement:
     mode: SnapgridCenter
   components:
@@ -41,9 +41,9 @@
     qualities:
     - Applicating
   - type: Appearance
-  # Exodus: universal optional mount; this is a shot interval modifier, not a reload modifier.
-  - type: ExodusHardpoint
-    fireIntervalMultiplier: 0.8
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Medium
   - type: Fixtures
     fixtures:
       fix1:
@@ -58,7 +58,7 @@
         - MachineLayer
   # Exodus: remain non-colliding so any weapon can be anchored on this tile.
   - type: ShipRepairable
-    repairTime: 15
+    repairTime: 5 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 50 # Main cost is in the guns.
   - type: Pullable
   - type: Tag
@@ -71,6 +71,9 @@
   name: debug hardpoint superlight universal
   suffix: DO NOT MAP
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Universal
+    size: Superlight
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
@@ -86,6 +89,9 @@
   name: debug hardpoint light universal
   suffix: DO NOT MAP
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Universal
+    size: Light
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
@@ -101,6 +107,9 @@
   name: debug hardpoint medium universal
   suffix: DO NOT MAP
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Universal
+    size: Medium
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
@@ -116,6 +125,9 @@
   name: debug hardpoint heavy universal
   suffix: DO NOT MAP
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Universal
+    size: Heavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
@@ -131,6 +143,9 @@
   name: debug hardpoint superheavy universal
   suffix: DO NOT MAP
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Universal
+    size: Superheavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
@@ -147,13 +162,16 @@
   parent: BaseHardpoint
   name: superlight ballistic hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Superlight
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 20
+    repairTime: 7 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 10
 
 - type: entity
@@ -161,13 +179,16 @@
   parent: BaseHardpoint
   name: light ballistic hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Light
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 40
+    repairTime: 14 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 15
 
 - type: entity
@@ -175,13 +196,16 @@
   parent: BaseHardpoint
   name: medium ballistic hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Medium
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 60
+    repairTime: 20 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 20
 
 - type: entity
@@ -189,13 +213,16 @@
   parent: BaseHardpoint
   name: heavy ballistic hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Heavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 80
+    repairTime: 27 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 25
 
 - type: entity
@@ -203,13 +230,16 @@
   parent: BaseHardpoint
   name: superheavy ballistic hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Ballistic
+    size: Superheavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 100
+    repairTime: 34 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 30
 
 # Energy
@@ -219,13 +249,16 @@
   parent: BaseHardpoint
   name: superlight energy hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Energy
+    size: Superlight
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 20
+    repairTime: 7 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 10
 
 - type: entity
@@ -233,13 +266,16 @@
   parent: BaseHardpoint
   name: light energy hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Energy
+    size: Light
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 40
+    repairTime: 14 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 15
 
 - type: entity
@@ -247,13 +283,16 @@
   parent: BaseHardpoint
   name: medium energy hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Energy
+    size: Medium
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 60
+    repairTime: 20 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 20
 
 - type: entity
@@ -261,13 +300,16 @@
   parent: BaseHardpoint
   name: heavy energy hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Energy
+    size: Heavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 80
+    repairTime: 27 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 25
 
 - type: entity
@@ -275,13 +317,16 @@
   parent: BaseHardpoint
   name: superheavy energy hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Energy
+    size: Superheavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 100
+    repairTime: 34 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 30
 
 # Missile
@@ -291,13 +336,16 @@
   parent: BaseHardpoint
   name: superlight missile hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Missile
+    size: Superlight
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 20
+    repairTime: 7 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 10
 
 - type: entity
@@ -305,13 +353,16 @@
   parent: BaseHardpoint
   name: light missile hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Missile
+    size: Light
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 40
+    repairTime: 14 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 15
 
 - type: entity
@@ -319,13 +370,16 @@
   parent: BaseHardpoint
   name: medium missile hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Missile
+    size: Medium
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 60
+    repairTime: 20 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 20
 
 - type: entity
@@ -333,13 +387,16 @@
   parent: BaseHardpoint
   name: heavy missile hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Missile
+    size: Heavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 80
+    repairTime: 27 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 25
 
 - type: entity
@@ -347,11 +404,14 @@
   parent: BaseHardpoint
   name: superheavy missile hardpoint
   components:
+  - type: ExodusHardpoint # Exodus hardpoint compatibility
+    class: Missile
+    size: Superheavy
   - type: ApcPowerReceiver
     powerLoad: 10000
   - type: Sprite
     sprite: _Crescent/Structures/hardpoints.rsi
     state: medium
   - type: ShipRepairable
-    repairTime: 100
+    repairTime: 34 # Exodus: SRD repair time / 3, rounded up.
     repairCost: 30

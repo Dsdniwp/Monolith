@@ -33,20 +33,20 @@ namespace Content.Server._Exodus.Nebula;
 /// <summary>
 /// Collects gas into a pipe while the shuttle moves through dense nebula with clear space along both ends of the siphon.
 /// </summary>
-public sealed class NebulaGasSiphonSystem : EntitySystem
+public sealed partial class NebulaGasSiphonSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedMapSystem _map = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly TurfSystem _turf = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly PowerReceiverSystem _powerReceiver = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedMapSystem _map = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private TurfSystem _turf = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private PowerReceiverSystem _powerReceiver = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<FixturesComponent> _fixturesQuery;
@@ -210,8 +210,7 @@ public sealed class NebulaGasSiphonSystem : EntitySystem
         _mergeBuffer.Temperature = profile.Temperature;
         _atmosphere.Merge(net.Air, _mergeBuffer);
 
-        filter.Remaining = MathF.Max(0f, filter.Remaining - toSpawn * filter.ConsumptionPerMole);
-        UpdateFilterAppearance(filterUid, filter);
+        ConsumeFilter((filterUid, filter), toSpawn * filter.ConsumptionPerMole);
         UpdateSiphonEmissionAppearance(uid, filter);
 
         if (filter.Remaining < Atmospherics.GasMinMoles)
@@ -905,6 +904,16 @@ public sealed class NebulaGasSiphonSystem : EntitySystem
 
         var percent = GetRemainingStage(ent.Comp) * 100 / NebulaGasSiphonFilterComponent.RemainingStageCount;
         args.PushMarkup(Loc.GetString("nebula-gas-siphon-filter-examine", ("percent", percent)));
+    }
+
+    /// <summary>Consumes cartridge life and updates its appearance and quantized remaining-life readout.</summary>
+    public void ConsumeFilter(Entity<NebulaGasSiphonFilterComponent> ent, float amount)
+    {
+        if (TerminatingOrDeleted(ent) || !float.IsFinite(amount) || amount <= 0)
+            return;
+
+        ent.Comp.Remaining = Math.Max(0f, ent.Comp.Remaining - amount);
+        UpdateFilterAppearance(ent, ent.Comp);
     }
 
     private void UpdateFilterAppearance(EntityUid uid, NebulaGasSiphonFilterComponent filter)

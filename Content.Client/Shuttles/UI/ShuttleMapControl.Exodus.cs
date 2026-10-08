@@ -1,5 +1,6 @@
 using System.Numerics;
 using Content.Client._Exodus.Nebula;
+using Content.Client._Exodus.Shuttles.UI;
 using Content.Client._Exodus.NPC;
 using Content.Client._Exodus.Territory; // Exodus corporate territory rings
 using Content.Client._Mono.Radar;
@@ -23,6 +24,8 @@ public sealed partial class ShuttleMapControl
     private const float TerritoryMediumIconThreshold = 1750f;
     private const float TerritoryLargeIconThreshold = 3750f;
     private const float TerritoryHugeIconThreshold = 4500f;
+    private const float ExclusionHatchSpacing = 9f;
+    private const float ExclusionHatchAlpha = 0.45f;
 
     private readonly RadarBlipsSystem _blips;
     private readonly NebulaSystem _nebula;
@@ -31,6 +34,7 @@ public sealed partial class ShuttleMapControl
     private Vector2[] _nebulaLineBuffer = [];
     private readonly Vector2[] _bluespaceMapBlipVertices = new Vector2[6];
     private readonly Vector2[] _bluespaceMapBlipEdges = new Vector2[8];
+    private readonly HatchedCircleRenderer _exclusionHatch = new();
     private readonly CorporateTerritoryRingRenderer _corporateTerritoryRings = new(); // Exodus corporate territory rings
     private readonly TerritoryCaptureDisplaySystem _territoryCapture; // Exodus contested territories
 
@@ -70,6 +74,11 @@ public sealed partial class ShuttleMapControl
     {
         var margin = 3f * UIScale;
         return new Box2(-margin, -margin, PixelSize.X + margin, PixelSize.Y + margin);
+    }
+
+    private void DrawHatchedCircle(DrawingHandleScreen handle, Vector2 center, float radius, Color color, Box2 viewBounds)
+    {
+        _exclusionHatch.DrawHatch(handle, center, radius, ExclusionHatchSpacing * UIScale, color.WithAlpha(ExclusionHatchAlpha), viewBounds);
     }
 
     private void DrawTerritoryRings(DrawingHandleScreen handle, List<IMapObject> mapObjects, Matrix3x2 matty, Box2 viewBounds)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Content.Client._Exodus.Camera; // Exodus: mouse wheel zoom.
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -36,6 +37,9 @@ namespace Content.Client.Viewport
         private int _fixedRenderScale = 1;
 
         private readonly List<CopyPixelsDelegate<Rgba32>> _queuedScreenshots = new();
+
+        // Exodus: allow world systems to consume wheel input while the pointer is over the viewport.
+        public event Action<GUIMouseWheelEventArgs>? WheelScrolled;
 
         // Fire edit start
         public ShaderInstance? Shader;
@@ -126,6 +130,14 @@ namespace Content.Client.Viewport
         {
             IoCManager.InjectDependencies(this);
             RectClipContent = true;
+        }
+
+        // Exodus: forward world viewport wheel input to systems such as rot construction.
+        protected override void MouseWheel(GUIMouseWheelEventArgs args)
+        {
+            base.MouseWheel(args);
+            WheelScrolled?.Invoke(args);
+            _entityManager.System<MouseWheelZoomSystem>().HandleMouseWheel(this, args); // Exodus: zoom after other wheel actions.
         }
 
         protected override void KeyBindDown(GUIBoundKeyEventArgs args)

@@ -17,12 +17,22 @@
 
 - type: entity
   id: MobRotSated
-  parent: [ SimpleSpaceMobBase, MobCombat ]
+  parent: [ SimpleSpaceMobBase, MobCombat, BaseRotColonyMob ]
   name: sated
   description: A towering, emaciated silhouette. Something shifts beneath its loose, waxy skin.
   components:
-  - type: RotCreature
+  - type: RotRetaliation
   - type: VirusImmunity
+  - type: RotDefender
+    stuckDelay: 2.5
+    detourDelay: 3
+    restDuration: 14
+    colonyRestDuration: 12
+    stuckDamage:
+      types:
+        Structural: 120
+    stuckSound:
+      collection: MetalSlam
   - type: RotSated
     consumeDuration: 60
     larvaePerCorpse: 4
@@ -63,6 +73,8 @@
     movingState: running
     attackState: attack
     attackDuration: 0.7
+    heavyAttackState: smash
+    heavyAttackDuration: 1.04
     spawnState: emerge
     spawnDuration: 1.2
     dyingState: dying
@@ -75,6 +87,39 @@
     speedModifierThresholds: {}
   - type: MovementAlwaysTouching
   - type: CanMoveInAir
+  - type: Prying
+    pryPowered: true
+    force: true
+    speedModifier: 3
+    useSound:
+      path: /Audio/Items/crowbar.ogg
+  - type: UseDelay
+    delay: 1
+  - type: UserInterface
+    interfaces:
+      enum.RadarConsoleUiKey.Key:
+        type: RadarConsoleBoundUserInterface
+  - type: IntrinsicUI
+    uis:
+      enum.RadarConsoleUiKey.Key:
+        toggleAction: ActionObserverShowRadar
+  - type: RadarConsole
+    followEntity: true
+    noRotate: true
+  - type: DetectionRangeMultiplier
+    infraredMultiplier: 0.5
+    visualMultiplier: 0.75
+  - type: NightVision
+    relayOverlay: false
+    goggleEffect: false # Natural night vision without tint or goggle mask.
+    viewCircleRadius: 550
+    viewCircleCount: 4
+    viewCircleSpacing: 280
+    action: ActionToggleNightVision
+    phosphorColor: "#00FF00"
+    lightingColor: "#FFFFFF32"
+  - type: ShowHealthBars
+  - type: ShowHealthIcons
   - type: MobState
     allowedStates: [ Alive, Dead ]
   - type: MobThresholds
@@ -87,22 +132,58 @@
   - type: MeleeWeapon
     angle: 0
     animation: WeaponArcClaw
+    wideAnimation: WeaponArcRotSatedSmash
     attackRate: 0.8
     damage:
       types:
-        Poison: 40
-        Piercing: 20
+        Poison: 35
+        Piercing: 30
+        Structural: 30
         Cellular: 5
         Radiation: 5
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: Puller
+    needsHands: false
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: ghost-role-rot-sated-name
+    description: ghost-role-rot-sated-description
+    rules: ghost-role-rot-sated-rules
+    mindRoles:
+    - MindRoleGhostRoleTeamAntagonist
+  - type: GhostTakeoverAvailable
+  - type: GuideHelp
+    guides:
+    - EXRuleGhostRoleRot
 
 - type: htnCompound
   id: RotSatedCompound
   branches:
   - tasks:
     - !type:HTNPrimitiveTask
+      operator: !type:RotRetaliationOperator
+  - tasks:
+    - !type:HTNPrimitiveTask
       operator: !type:RotSatedOperator
+
+- type: entity
+  id: WeaponArcRotSatedSmash
+  parent: WeaponArcStatic
+  categories: [ HideSpawnMenu ]
+  components:
+  - type: WeaponArcVisuals
+    fadeOut: false
+  - type: Sprite
+    sprite: _Exodus/Effects/rot_sated_slam.rsi
+    state: slam
+    noRotation: true
+    offset: 0, -0.15
+    drawdepth: HighFloorObjects
+  - type: TimedDespawn
+    lifetime: 1.039
 
 - type: entity
   id: RotSatedDeathEffect

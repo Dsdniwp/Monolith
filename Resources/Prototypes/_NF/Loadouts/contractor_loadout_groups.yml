@@ -806,6 +806,8 @@
   - ContractorPlushieSharkGrey
   - ContractorPlushieSharkBlue
   - ContractorPlushieSharkPink
+  - ContractorMPPlayerBase # Exodus-add
+  - ContractorMPPlayerGold # Exodus-add
   - ContractorHarmonicaInstrument
   - ContractorSaxophoneInstrument
   - ContractorAcousticGuitarInstrument
@@ -968,12 +970,16 @@
   maxLimit: 2
   loadouts:
   - ContractorMedicalTrackingImplanter
+  # Exodus-begin medical service tiers
+  - ContractorMedicalTrackingImplanterSilver
+  - ContractorMedicalTrackingImplanterGold
+  - ContractorMedicalTrackingImplanterPlatinum
+  # Exodus-end
   - ContractorLightImplanter
   - ContractorBikeHornImplanter
   - ContractorSadTromboneImplanter
   - ContractorMimePowersImplanter
-  fallbacks:
-  - ContractorMedicalTrackingImplanter
+  # Exodus: optional paid implants have no free fallback.
 
 - type: loadoutGroup
   id: ContractorBureaucracy

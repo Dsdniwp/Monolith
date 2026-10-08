@@ -49,7 +49,9 @@ public sealed partial class RotHungrySystem
 
     private void OnShutdown(Entity<RotHungryComponent> ent, ref ComponentShutdown args)
     {
+        _actions.RemoveAction(ent.Owner, ent.Comp.StrikeActionEntity);
         CancelDetour(ent);
+        CancelRetreatPath(ent);
         SetFrenzy(ent, false);
     }
 
@@ -65,8 +67,10 @@ public sealed partial class RotHungrySystem
 
     private void ResetRetreat(Entity<RotHungryComponent> ent)
     {
+        CancelRetreatPath(ent);
         ent.Comp.Retreating = false;
         ent.Comp.Shelter = null;
+        ent.Comp.RetreatDirection = Vector2.Zero;
         ent.Comp.Pursuer = null;
         ent.Comp.PursuitPositions.Clear();
         SetFrenzy(ent, false);
@@ -74,6 +78,8 @@ public sealed partial class RotHungrySystem
 
     private bool TryEndRetreat(Entity<RotHungryComponent> ent)
     {
+        if (ent.Comp.Retreating && _timing.CurTime < ent.Comp.RetreatUntil)
+            return false;
         if (!TryComp<DamageableComponent>(ent, out var damage)
             || !_thresholds.TryGetThresholdForState(ent, MobState.Dead, out var threshold)
             || damage.TotalDamage > threshold * ent.Comp.ReturnDamageFraction)
@@ -98,6 +104,7 @@ public sealed partial class RotHungrySystem
             ent.Comp.Retreating = true;
             ent.Comp.RetreatUntil = _timing.CurTime + ent.Comp.RetreatDuration;
             ent.Comp.NextShelterSearch = _timing.CurTime;
+            ent.Comp.NextRetreatUpdate = _timing.CurTime;
             Stop(ent);
         }
 

@@ -295,26 +295,30 @@
     emergencyShieldFraction: 0.25
   - type: PointLight
     color: "#48C96B"
-# Universal States of America corporate shield. It protects only the forward arc selected by generator rotation.
+# Shared field configuration for full-coverage EMP-protecting shields.
+- type: entity
+  id: ShieldGeneratorEmpBase
+  parent: ShieldGeneratorSmall
+  abstract: true
+  components:
+  - type: ShipShieldEmitter
+    damageLimit: 75000
+    healPerSecond: 550
+    baseDraw: 30000
+    maxDraw: 70000
+    shieldColor: "#0A5DFF"
+    empProtection: true
+    rippleWidth: 8
+    rippleSpeed: 0.75
+    collisionResistanceMultiplier: 1.0
+
+# Universal States of America corporate shield. A rippling field protects the whole ship from EMPs.
 - type: entity
   id: ShieldGeneratorUnsa
-  parent: ShieldGeneratorSmall
+  parent: ShieldGeneratorEmpBase
   name: unsa-directional-shield-generator-name
   description: unsa-directional-shield-generator-description
   components:
-  - type: DirectionalShipShieldEmitter
-    arcDegrees: 120
-  - type: ShipShieldEmitter
-    damageLimit: 110000
-    healPerSecond: 700
-    baseDraw: 30000
-    maxDraw: 80000
-    shieldColor: "#0A5DFF"
-    collisionResistanceMultiplier: 1.0
-  - type: Transform
-    noRot: false
-  - type: Rotatable
-    rotateWhileAnchored: true
   - type: Sprite
     sprite: _Exodus/Structures/ShuttleComponents/liberty_shield_generator.rsi
     snapCardinals: true
@@ -360,3 +364,42 @@
     maxCartridges: 1
   - type: Machine
     board: ShieldGeneratorUnsaMachineCircuitboard
+
+# Sintez Holding corporate shield. Hardened against asteroid collisions,
+# weak against projectiles. Uses the reliable small shield platform.
+- type: entity
+  id: ShieldGeneratorMS150
+  parent: ShieldGeneratorSmall
+  name: MS-150 "Sentinel" Shield Generator
+  description: Developed by the Sintez Holding for protection against asteroid collisions. Weak against projectiles.
+  components:
+  - type: ShipShieldEmitter
+    damageLimit: 90000
+    healPerSecond: 600
+    baseDraw: 25000
+    maxDraw: 70000
+    shieldColor: "#FFFF00"
+    collisionResistanceMultiplier: 0.05
+    deflectionDamageModifier: 1.5
+  - type: Sprite
+    sprite: _Mono/Structures/ShuttleComponents/shield.rsi
+    snapCardinals: true
+    layers:
+    - state: control
+    - state: control_on
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      visible: false
+      color: "#FFFF00"
+  - type: PointLight
+    color: "#FFFF00"
+  - type: Construction
+    graph: MachineImmovable
+    node: machine
+    deconstructionTarget: null
+    containers:
+    - machine_board
+    - machine_parts
+  - type: Anchorable
+    flags:
+    - None
