@@ -5,6 +5,12 @@
   description: A hostile autonomous AI core belonging to the Malfunctioning Drones faction.
   suffix: AI, Malfunctioning Drones
   components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/station_ai_malf.rsi
+    layers:
+    - state: base
+    - state: ai
+      shader: unshaded
   - type: FactionNpcAiCore
     faction: Malf
     ignoredFactions:
@@ -20,6 +26,13 @@
   description: An AI core belonging to the Malfunctioning Drones faction.
   suffix: Ghost Role, Malfunctioning Drones
   components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/station_ai_malf.rsi
+    layers:
+    - state: base
+    - state: ai
+      map: ["unshaded"]
+      shader: unshaded
   - type: CleanupImmune
   - type: WorldChunkLoadingExempt
     retainLoadedChunks: true
