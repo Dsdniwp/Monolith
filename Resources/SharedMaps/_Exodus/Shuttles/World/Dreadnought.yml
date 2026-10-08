@@ -9113,7 +9113,7 @@ entities:
       parent: 1
     - type: Stack
       count: 100
-- proto: ShieldGeneratorMedium
+- proto: ShieldGeneratorMediumMalf
   entities:
   - uid: 1544
     components:
