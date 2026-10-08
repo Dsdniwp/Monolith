@@ -16,4 +16,4 @@
     rule: MalfDreadnoughtArrival
     shuttleFaction: null
   - type: StaticPrice
-    price: 95000
+    price: 125000
