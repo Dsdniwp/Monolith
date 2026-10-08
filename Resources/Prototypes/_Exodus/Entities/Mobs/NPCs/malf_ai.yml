@@ -6,10 +6,10 @@
   suffix: AI, Malfunctioning Drones
   components:
   - type: Sprite
-    sprite: _Exodus/Mobs/Silicon/station_ai_malf.rsi
+    sprite: _Exodus/Mobs/Silicon/npc_ai_malf.rsi
     layers:
     - state: base
-    - state: ai
+    - state: malf_t2
       shader: unshaded
   - type: FactionNpcAiCore
     faction: Malf
@@ -109,6 +109,12 @@
   parent: StationAiHolo
   categories: [ HideSpawnMenu, DoNotMap ]
   components:
+  - type: Sprite
+    sprite: _Exodus/Mobs/Silicon/ai_eye_malf.rsi
+    layers:
+    - state: ai_camera
+      shader: unshaded
+      map: ["base"]
   - type: WorldChunkLoadingExempt
     retainLoadedChunks: true
     retainLoadedChunksRadius: 2
