@@ -23,6 +23,7 @@
     maxAngle: 3
     projectileSpeed: 30
     fireRate: 0.2
+    resetOnHandSelected: false
     selectedMode: SemiAuto
     availableModes:
     - SemiAuto
