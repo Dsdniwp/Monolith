@@ -4,8 +4,8 @@ meta:
   engineVersion: 277.2.1
   forkId: ""
   forkVersion: ""
-  time: 09/28/2026 14:04:17
-  entityCount: 2438
+  time: 10/08/2026 12:03:28
+  entityCount: 2443
 maps: []
 grids:
 - 1
@@ -159,11 +159,11 @@ entities:
     - type: OccluderTree
     - type: SpreaderGrid
       spreadQueues:
-        MetalFoam: []
+        Puddle: []
         ExodusBiohazardFoam: []
         Smoke: []
+        MetalFoam: []
         Kudzu: []
-        Puddle: []
     - type: Shuttle
       dampingModifier: 0.25
     - type: GridPathfinding
@@ -171,7 +171,7 @@ entities:
       gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
     - type: IFF
-      address: ' 7D31-E41E'
+      address: ' 0A4E-6919'
       color: '#FF3DB1FF'
     - type: DecalGrid
       chunkCollection:
@@ -647,6 +647,7 @@ entities:
     - type: ThermalSignature
     - type: ImplicitRoof
     - type: ExplosionAirtightGrid
+    - type: RotColonySiteTree
 - proto: AirAlarm
   entities:
   - uid: 2
@@ -8482,6 +8483,14 @@ entities:
       parent: 1
     - type: Stack
       count: 20
+- proto: NpcStationAiAttackerStaticSmartSyndicate
+  entities:
+  - uid: 2441
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -0.5,7.5
+      parent: 1
 - proto: PlasmaReinforcedWindowDirectional
   entities:
   - uid: 1451
@@ -9095,6 +9104,26 @@ entities:
     - type: Transform
       pos: 0.5,-3.5
       parent: 1
+- proto: ShipRepairDroneStationStandard
+  entities:
+  - uid: 2442
+    components:
+    - type: Transform
+      pos: 5.5,1.5
+      parent: 1
+    - type: ApcPowerReceiverBattery
+      enabled: True
+    - type: Battery
+      startingCharge: 23025
+  - uid: 2443
+    components:
+    - type: Transform
+      pos: -4.5,1.5
+      parent: 1
+    - type: ApcPowerReceiverBattery
+      enabled: True
+    - type: Battery
+      startingCharge: 23100
 - proto: SignalButton
   entities:
   - uid: 1545
@@ -9200,6 +9229,20 @@ entities:
     components:
     - type: Transform
       pos: 7.5,-8.5
+      parent: 1
+- proto: SpawnAiRemoteBorgDerelict
+  entities:
+  - uid: 2439
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: 4.5,-10.5
+      parent: 1
+  - uid: 2440
+    components:
+    - type: Transform
+      rot: 3.141592653589793 rad
+      pos: -3.5,-10.5
       parent: 1
 - proto: SubstationBasic
   entities:
